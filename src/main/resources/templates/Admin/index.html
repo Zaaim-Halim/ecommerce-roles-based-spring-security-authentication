@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl-PL">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>index</title>
+        <link rel="icon" href=" https://start.spring.io/images/icon-48x48.png"/>
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link th:href="@{/css/admin.css}" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.css"/>
+
+
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-light">Admin panel</div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/Admin/index">index</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/Admin/addProduct">add product</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/logout">logout</a>
+                    
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <button class="btn btn-light btn-sm" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span></button>
+
+                    </div>
+                </nav>
+                <!-- Page content-->
+                <div class="container-fluid">
+                    <h4 class="mt-4 text-center">Products Lists:</h4>
+                    <hr/>
+                    <table id="example" class="table table-striped" style="width:100%">
+                        <thead>
+                          <tr>
+                            <th>id </th>
+                            <th>image</th>
+                            <th>name</th>
+                            <th >price</th>
+                              <th >reduction</th>
+                            <th>stock</th>
+                            <th>description</th>
+                              <th>actions</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                        <tr th:each="product: ${products}">
+                            <td th:text="${product.id}" ></td>
+                            <td th:if="${product.image != null}"  >
+                                <img th:src="*{'data:image/jpeg;base64,'+{product.image}}"
+                                     style="width: 60px; height: 60px;" alt="eImg">
+                            </td>
+
+                            <td th:text="${product.name}" ></td>
+                            <td th:text="${product.price}" ></td>
+                            <td th:text="${product.reduction}" ></td>
+                            <td th:text="${product.stock}" ></td>
+
+                            <td th:text="*{product.description}" ></td>
+                            <td>
+                                <a class="btn btn-danger btn-sm" th:href="@{/Admin/delete-product/{id}(id=${product.id})}" >delete</a>
+                                <a class="btn btn-success btn-sm" th:href="@{/Admin/editer-product/{id}(id=${product.id})}" >Editer&nbsp;</a>
+                            </td>
+                        </tr>
+                        </tbody>
+                      </table>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script  th:src="@{/js/admin.js}"></script>
+
+        <script type="text/javascript" src="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.js"></script>
+        <script type="text/javascript">
+            $(document).ready(function () {
+                $('#example').DataTable();
+            });
+        </script>
+    </body>
+</html>

@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl-PL">
+<head>
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Site Metas -->
+    <link rel="icon" href=" https://start.spring.io/images/icon-48x48.png"/>
+
+    <title>spring security</title>
+
+    <!-- boostrap ccs -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/boostrap.css}" />
+
+    <!-- fonts style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- custom styles -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <!-- rensponsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+    <style>
+        .label{
+            background-color: white !important;
+            color: red;
+            border-radius: 35px;
+            font-size: 10px;
+            margin-top: -8px;
+            margin-left: -56px;
+            position: absolute;
+            padding: 4px 8px;
+            line-height: 7px;
+        }
+        .table>tbody>tr>td, .table>tfoot>tr>td{
+            vertical-align: middle;
+        }
+        @media screen and (max-width: 600px) {
+            table#cart tbody td .form-control{
+                width:20%;
+                display: inline !important;
+            }
+            .actions .btn{
+                width:36%;
+                margin:1.5em 0;
+            }
+
+            .actions .btn-info{
+                float:left;
+            }
+            .actions .btn-danger{
+                float:right;
+            }
+
+            table#cart thead { display: none; }
+            table#cart tbody td { display: block; padding: .6rem; min-width:320px;}
+            table#cart tbody tr td:first-child { background: #333; color: #fff; }
+            table#cart tbody td:before {
+                content: attr(data-th); font-weight: bold;
+                display: inline-block; width: 8rem;
+            }
+
+
+
+            table#cart tfoot td{display:block; }
+            table#cart tfoot td .btn{display:block;}
+
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero_area" style="min-height: 1vh !important">
+    <!-- header section -->
+    <header class="header_section">
+        <div class="header_top">
+            <div class="container-fluid">
+                <div class="top_nav_container">
+                    <div class="contact_nav">
+                        <a href="">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            <span>
+                   phone : 67892311
+                </span>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <span>
+                            Email : spring@gmail.com
+
+                </span>
+                        </a>
+                    </div>
+                    <from class="search_form">
+                        <input type="text" class="form-control" placeholder="search products...">
+                        <button class="" type="submit">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </from>
+                    <div class="user_option_box">
+                        <span style="color:white">[[${user.firstName}]]</span>
+                        <a href="#" class="account-link">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+                        </a>
+                        <a th:href="@{'/User/cart?id='+${shop.id}}" class="cart-link">
+                             <span th:if="${shop != null}"
+                                   class="label">[[${shop.nbItems}]]
+                            </span>
+                            <span th:if="${shop == null}"
+                                  class="label">0
+                            </span>
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="header_bottom">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                    <a class="navbar-brand" href="index.html">
+              <span>
+                OurShop
+              </span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class=""> </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ">
+                            <li class="nav-item active">
+                                <a class="nav-link" th:href="@{/User/index}">Home </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/User/cart}">My cart</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/logout}">Logout</a>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+</div>
+
+<!-- product section -->
+
+<section class="product_section pt-4 ">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+                shopping cart
+            </h2>
+        </div>
+        <div class="row">
+
+            <div class="container">
+                <table id="cart" class="table table-hover table-condensed">
+                    <thead>
+                    <tr>
+                        <th style="width:50%">Product</th>
+                        <th style="width:10%">Price</th>
+                        <th style="width:8%">Quantity</th>
+                        <th style="width:22%" class="text-center">Subtotal</th>
+                        <th style="width:10%"></th>
+                    </tr>
+                    </thead>
+                    <tbody>
+                    <tr th:each="item : ${shop.items}">
+                        <td data-th="Product">
+                            <div class="row">
+                                <div class="col-sm-2 hidden-xs"><img th:src="*{'data:image/jpeg;base64,'+{item.product.image}}" alt="..." width="95px" height="100px" class="img-responsive"/></div>
+                                <div class="col-sm-10">
+                                    <h4 class="nomargin pl-2">[[${item.product.name}]]</h4>
+                                    <p class="pl-2">[[${item.product.description}]]</p>
+                                </div>
+                            </div>
+                        </td>
+                        <td data-th="Price">$[[${item.product.price}]]</td>
+                        <form th:action="@{/User/update-cartItem}">
+                        <td data-th="Quantity">
+                            <input type="number" name="quantity" min="1" th:value="${item.getQuantity()}" th:attr="max='${item.product.stock}'" class="form-control text-center" value="1">
+                            <input type="number" hidden="hidden" name="id" th:value="${item.id}">
+                        </td>
+                        <td data-th="Subtotal" class="text-center">[[${item.getSubtotal()}]]</td>
+                        <td class="actions" data-th="">
+                            <button th:href class="btn btn-info btn-sm"><i class="fa fa-refresh"></i></button>
+                           </form>
+                            <a th:href="@{/User/remove-cartItem/{id}(id=${item.id})}" class="btn btn-danger btn-sm"><i class="fa fa-trash-o"></i></a>
+                        </td>
+                    </tr>
+                    </tbody>
+                    <tfoot>
+                    <tr class="visible-xs">
+                        <td class="text-center"><strong>Total [[${shop.getTotalPrice()}]]$</strong></td>
+                    </tr>
+                    <tr>
+                        <td><a th:href="@{/User/index}" class="btn btn-warning"><i class="fa fa-angle-left"></i> Continue Shopping</a></td>
+                        <td colspan="2" class="hidden-xs"></td>
+                        <td class="hidden-xs text-center"><strong>Total $[[${shop.getTotalPrice()}]]$</strong></td>
+                        <td><a href="#" class="btn btn-success btn-block">Checkout <i class="fa fa-angle-right"></i></a></td>
+                    </tr>
+                    </tfoot>
+                </table>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+
+<!-- footer section -->
+<footer class="footer_section">
+    <div class="container">
+        <p>
+            &copy; <span id="displayYear"></span> All Rights Reserved: 2022
+        </p>
+    </div>
+</footer>
+<!-- footer section -->
+
+<!-- jQery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<!-- custom js -->
+<script th:src="@{/js/custrom.js}"></script>
+</body>
+</html>

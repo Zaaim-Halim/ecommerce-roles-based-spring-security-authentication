@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl-PL">
+    <head>
+        <meta charset="utf-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+        <meta name="description" content="" />
+        <meta name="author" content="" />
+        <title>index</title>
+        <link rel="icon" href=" https://start.spring.io/images/icon-48x48.png"/>
+        <!-- Core theme CSS (includes Bootstrap)-->
+        <link th:href="@{/css/admin.css}" rel="stylesheet" />
+        <link rel="stylesheet" type="text/css" href="https://cdn.datatables.net/v/bs5/dt-1.12.1/r-2.3.0/datatables.min.css"/>
+
+     <style>
+         .login-form{
+             box-shadow: 0 5px 8px 0 rgba(0, 0, 0, 0.2), 0 9px 26px 0 rgba(0, 0, 0, 0.19);
+         }
+     </style>
+    </head>
+    <body>
+        <div class="d-flex" id="wrapper">
+            <!-- Sidebar-->
+            <div class="border-end bg-white" id="sidebar-wrapper">
+                <div class="sidebar-heading border-bottom bg-light">Admin panel</div>
+                <div class="list-group list-group-flush">
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/Admin/index">index</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/Admin/addProduct">add product</a>
+                    <a class="list-group-item list-group-item-action list-group-item-light p-3" href="/logout">logout</a>
+                    
+                </div>
+            </div>
+            <!-- Page content wrapper-->
+            <div id="page-content-wrapper">
+                <!-- Top navigation-->
+                <nav class="navbar navbar-expand-lg navbar-light bg-light border-bottom">
+                    <div class="container-fluid">
+                        <button class="btn btn-light btn-sm" id="sidebarToggle"><span class="navbar-toggler-icon"></span></button>
+                        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                            <span class="navbar-toggler-icon"></span></button>
+
+                    </div>
+                </nav>
+                <!-- Page content-->
+                <div class="container-fluid">
+                    <h4 class="mt-4 text-center">Add product :</h4>
+                    <hr/>
+                     <form style="padding: 20px;" class="login-form" th:object="${productDto}"  th:action="@{/Admin/addProduct}" enctype="multipart/form-data" method="post">
+                         <div class="mb-3 row">
+                             <label for="name" class="col-sm-2 col-form-label">name : </label>
+                             <div class="col-sm-10">
+                                 <input type="text" th:field="*{name}"  required="required" class="form-control" id="name" />
+                             </div>
+                         </div>
+                         <div class="mb-3 row">
+                             <label for="price" class="col-sm-2 col-form-label">price : </label>
+                             <div class="col-sm-10">
+                                 <input type="number" th:field="*{price}" required="required"   class="form-control" id="price" />
+                             </div>
+                         </div>
+                         <div class="mb-3 row">
+                             <label for="reduction" class="col-sm-2 col-form-label">reduction : </label>
+                             <div class="col-sm-10">
+                                 <input type="number"  th:field="*{reduction}" required="required" step="any"  class="form-control" id="reduction" />
+                             </div>
+                         </div>
+                         <div class="mb-3 row">
+                             <label for="quantity" class="col-sm-2 col-form-label">stock : </label>
+                             <div class="col-sm-10">
+                                 <input type="number" th:field="*{stock}" min="1" required="required"   class="form-control" id="quantity" />
+                             </div>
+                         </div>
+                         <div class="mb-3 row">
+                             <label for="description" class="col-sm-2 col-form-label">description : </label>
+                             <div class="col-sm-10">
+                                  <textarea class="form-control" th:field="*{description}" required="required"   id="description"> ...</textarea>
+                             </div>
+                         </div>
+                         <div class="mb-3 row">
+                             <label for="image" class="col-sm-2 col-form-label">image : </label>
+                             <div class="col-sm-10">
+                                 <input class="form-control" th:field="*{imageFile}"  required="required" type="file" id="image">
+                             </div>
+                         </div>
+                         <div class="mb-3 row">
+                             <label class="col-sm-2 col-form-label"></label>
+                             <div class="col-sm-4">
+                                 <input class="btn btn-block btn-primary" type="submit" value="submit">
+                             </div>
+                         </div>
+                     </form>
+                </div>
+            </div>
+        </div>
+        <!-- Bootstrap core JS-->
+        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js"></script>
+        <!-- Core theme JS-->
+        <script  th:src="@{/js/admin.js}"></script>
+
+    </body>
+</html>

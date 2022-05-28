@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl=PL">
+<head>
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <link rel="icon" href=" https://start.spring.io/images/icon-48x48.png"/>
+
+    <title>spring security</title>
+    <!-- boostrap ccs -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/boostrap.css}" />
+
+    <!-- fonts style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- custom styles -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <!-- rensponsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+</head>
+<body>
+
+<div class="hero_area">
+
+    <h1 class="login-header" style="text-align:center;margin-top: 20px;">Register </h1>
+    <section class=" jw-100 p-4 d-flex justify-content-center pb-4">
+     <div style="width: 32rem">
+        <form th:action="@{/register}" class="login-form" th:object="${user}" method="post" style="padding: 20px;">
+            <!-- 2 column grid layout with text inputs for the first and last names -->
+            <div class="row mb-4">
+                <div class="col">
+                    <div class="form-outline">
+                        <label class="form-label" for="form3Example1">First name</label>
+                        <input type="text" id="form3Example1" required="required" th:field="*{firstName}" class="form-control" />
+
+                    </div>
+                </div>
+                <div class="col">
+                    <div class="form-outline">
+                        <label class="form-label" for="form3Example2">Last name</label>
+                        <input type="text" id="form3Example2" required="required" th:field="*{lasttName}" class="form-control" />
+
+                    </div>
+                </div>
+            </div>
+
+            <!-- Email input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example3">Email address</label>
+                <input type="email" id="form3Example3" required="required" th:field="*{email}" class="form-control" />
+
+            </div>
+
+            <!-- Password input -->
+            <div class="form-outline mb-4">
+                <label class="form-label" for="form3Example4">Password</label>
+                <input type="password" id="form3Example4" required="required" th:field="*{password}" class="form-control" />
+
+            </div>
+            <!-- Submit button -->
+            <button type="submit" class="btn btn-primary btn-block mb-4">Sign up</button>
+
+            <!-- Register buttons -->
+            <!-- Register buttons -->
+            <div class="text-center">
+                <h6 style="text-align:center;margin-top: 20px;">
+                    or back to login ?</br>
+                    <a th:href="@{/login}" class="login-link">login</a>
+                </h6>
+            </div>
+
+        </form>
+     </div>
+    </section>
+</div>
+<!-- end of login section -->
+<!-- footer section -->
+<footer class="footer_section">
+    <div class="container">
+        <p>
+            &copy; <span id="displayYear"></span> All Rights Reserved By TebShop 2022
+        </p>
+    </div>
+</footer>
+<!-- end of footer section -->
+!-- jQery -->
+<script th:src="@{/js/jquery-3.4.1.min.js}"></script>
+<!-- bootstrap js -->
+<script th:src="@{/js/bootstrap.js}"></script>
+<!-- custom js -->
+<script th:src="@{/js/custrom.js}"></script>
+</body>
+</html>

@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pl-PL">
+<head>
+    <!-- Basic -->
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <!-- Site Metas -->
+    <link rel="icon" href=" https://start.spring.io/images/icon-48x48.png"/>
+    <title>spring security</title>
+
+    <!-- boostrap ccs -->
+    <link rel="stylesheet" type="text/css" th:href="@{/css/boostrap.css}" />
+
+    <!-- fonts style -->
+    <link th:href="@{/css/font-awesome.min.css}" rel="stylesheet" />
+
+    <!-- custom styles -->
+    <link th:href="@{/css/style.css}" rel="stylesheet" />
+
+    <!-- rensponsive style -->
+    <link th:href="@{/css/responsive.css}" rel="stylesheet" />
+    <style>
+        .label{
+            background-color: white !important;
+            color: red;
+            border-radius: 35px;
+            font-size: 10px;
+            margin-top: -8px;
+            margin-left: -56px;
+            position: absolute;
+            padding: 4px 8px;
+            line-height: 7px;
+        }
+    </style>
+</head>
+<body>
+
+<div class="hero_area">
+    <!-- header section -->
+    <header class="header_section">
+        <div class="header_top">
+            <div class="container-fluid">
+                <div class="top_nav_container">
+                    <div class="contact_nav">
+                        <a href="">
+                            <i class="fa fa-phone" aria-hidden="true"></i>
+                            <span>
+                  phone : 67892311
+                </span>
+                        </a>
+                        <a href="">
+                            <i class="fa fa-envelope" aria-hidden="true"></i>
+                            <span>
+                  Email : spring@gmail.com
+                </span>
+                        </a>
+                    </div>
+                    <from class="search_form">
+                        <input type="text" class="form-control" placeholder="search products...">
+                        <button class="" type="submit">
+                            <i class="fa fa-search" aria-hidden="true"></i>
+                        </button>
+                    </from>
+                    <div class="user_option_box">
+                        <span style="color: white">[[${user.firstName}]]</span>
+                        <a class="account-link">
+                            <i class="fa fa-user" aria-hidden="true"></i>
+
+                        </a>
+                        <a  th:if="${shop != null}" th:href="@{'/User/cart?id='+${shop.id}}" class="cart-link">
+                            <span
+                                    class="label">[[${shop.nbItems}]]
+                            </span>
+
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+
+                        </a>
+                        <a  th:if="${shop == null}" th:href="@{/User/cart}" class="cart-link">
+                            <span
+                                    class="label">0
+                            </span>
+                            <i class="fa fa-shopping-cart" aria-hidden="true"></i>
+
+
+                        </a>
+                    </div>
+                </div>
+
+            </div>
+        </div>
+        <div class="header_bottom">
+            <div class="container-fluid">
+                <nav class="navbar navbar-expand-lg custom_nav-container ">
+                    <a class="navbar-brand" href="index.html">
+              <span>
+                OurShop
+              </span>
+                    </a>
+
+                    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                        <span class=""> </span>
+                    </button>
+
+                    <div class="collapse navbar-collapse" id="navbarSupportedContent">
+                        <ul class="navbar-nav ">
+                            <li class="nav-item active">
+                                <a class="nav-link" th:href="@{/User/index}">Home </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/User/cart}">My cart</a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" th:href="@{/logout}">Logout</a>
+                        </ul>
+                    </div>
+                </nav>
+            </div>
+        </div>
+    </header>
+
+    <!-- slider section -->
+    <section class="slider_section ">
+        <div id="customCarousel1" class="carousel slide" data-ride="carousel">
+            <div class="carousel-inner">
+                <div th:each="p ,state : ${products}"  th:class="${state.first}?'carousel-item active':'carousel-item'">
+                    <div class="container ">
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div class="detail-box">
+                                    <h1>
+                                       [[${p.name}]]
+                                    </h1>
+                                    <p>
+                                        [[${p.description}]]
+                                    </p>
+
+                                </div>
+                            </div>
+                            <div class="col-md-6">
+                                <div class="img-box">
+                                    <img th:src="*{'data:image/jpeg;base64,'+{p.image}}" alt="" height="300px">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="carousel_btn_box">
+                <a class="carousel-control-prev" href="#customCarousel1" role="button" data-slide="prev">
+                    <i class="fa fa-angle-left" aria-hidden="true"></i>
+                    <span class="sr-only">Poprzedni</span>
+                </a>
+                <a class="carousel-control-next" href="#customCarousel1" role="button" data-slide="next">
+                    <i class="fa fa-angle-right" aria-hidden="true"></i>
+                    <span class="sr-only">Następny</span>
+                </a>
+            </div>
+        </div>
+    </section>
+</div>
+
+<!-- product section -->
+
+<section class="product_section pt-4 ">
+    <div class="container">
+        <div class="heading_container heading_center">
+            <h2>
+                our products
+            </h2>
+        </div>
+        <div class="row">
+            <div class="col-sm-6 col-lg-4" th:each="p :${products}">
+                <div class="box">
+                    <div class="img-box">
+                        <img th:src="*{'data:image/jpeg;base64,'+{p.image}}"
+                             style='height: 100%; width: 100%; object-fit: contain' alt="">
+                        <button href="" class="add_cart_btn" data-toggle="modal" th:attr="data-target='#viewM'+${p.id}">
+                           <span>
+                            veiw <i class="fa fa-eye"></i>
+                         </span>
+                        </button>
+                        <!-- Modal -->
+                        <div class="modal fade" th:attr="id='viewM'+${p.id}"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                            <div class="modal-dialog modal-dialog-centered" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h5 class="modal-title" id="exampleModalLongTitle">Product details </h5>
+                                        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                            <span aria-hidden="true">&times;</span>
+                                        </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        <div class="row">
+                                            <div class="col">
+                                                <img th:src="*{'data:image/jpeg;base64,'+{p.image}}"
+                                                     style='height: 100%; width: 100%; object-fit: contain' alt="">
+                                            </div>
+                                            <div class="col">
+                                               <h4> [[${p.name}]]</h4>
+                                                <p><strong>Description : </strong><span>[[${p.description}]]</span></p>
+                                                <p><strong>Price : </strong><span>[[${p.price}]]</span></p>
+                                                <p><strong>Stock : </strong><span>[[${p.stock}]]</span></p>
+                                                <p><strong>Reduction : </strong><span>[[${p.reduction}]]</span></p>
+                                            </div>
+                                        </div>
+                                    </div>
+
+                                </div>
+                            </div>
+                        </div>
+
+                    </div>
+                    <div class="detail-box">
+                        <h5>
+                            [[${p.name}]]
+                        </h5>
+                        <div class="product_info">
+                            <h5>
+                                <span>[[${p.price}]]$</span>  <!-- TODO cena -->
+                            </h5>
+                            <button class="btn btn-success btn-sm" data-toggle="modal"  th:attr="data-target='#addM'+${p.id}" >
+                                <i class="fa fa-cart-plus" style="font-size: 20px !important;"></i>
+                            </button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" th:attr="id='addM'+${p.id}"  tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                                <div class="modal-dialog modal-dialog-centered modal-sm" role="document">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="uu">add To cart </h5>
+                                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                <span aria-hidden="true">&times;</span>
+                                            </button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form th:action="@{/User/add-cart}" method="post">
+
+                                                <div class="form-group">
+                                                    <input type="number" name="id" hidden="hidden" th:value="${p.id}" >
+
+                                                    <label for="quantity">Quantity :</label>
+                                                    <input type="number" name="quantity" min="1" th:attr="max='${p.stock}'"  class="form-control" id="quantity" >
+                                                </div>
+
+                                                <button type="submit" class="btn btn-primary">Submit</button>
+                                            </form>
+                                        </div>
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="star_container">
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                                <i class="fa fa-star" aria-hidden="true"></i>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div>
+
+    </div>
+</section>
+<!-- footer section -->
+<footer class="footer_section">
+    <div class="container">
+        <p>
+            &copy; <span id="displayYear"></span> All Rights reserver: 2022
+        </p>
+    </div>
+</footer>
+<!-- footer section -->
+
+<!-- jQery -->
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+<!-- custom js -->
+<script th:src="@{/js/custrom.js}"></script>
+</body>
+</html>
